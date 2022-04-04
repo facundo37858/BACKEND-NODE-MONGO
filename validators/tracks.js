@@ -16,12 +16,12 @@ const validatorCreateItem=[
     check('duration.end').exists().notEmpty(),
     check('mediaId').exists().notEmpty().isMongoId(),
     (req,res,next)=>{return validateResult(req,res,next)}
+]  
+const validatorDetails=[
+    check('id').exists().notEmpty().isMongoId(),
+    (req,res,next)=>{return validateResult(req,res,next)}
 
-
-    
-
-
-]   
+] 
 // tiene que devolver una respuesta
 
-module.exports={validatorCreateItem}
+module.exports={validatorCreateItem, validatorDetails}

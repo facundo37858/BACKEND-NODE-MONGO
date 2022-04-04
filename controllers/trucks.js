@@ -1,28 +1,101 @@
+const { matchedData } = require('express-validator')
 const {trucksModel}=require('../models')
+const { handleErrorHttp } = require('../utils/handelError')
 
 
 const getItems= async (req,res)=>{
 
-    const data= await trucksModel.find({})
+    try {
+        
+        const data= await trucksModel.find({})
 
-    res.send({data})
+        res.send({data})
+
+    } catch (error) {
+        handleErrorHttp(res,'ERROR_GET_ITEMS_TRUCKS')
+    }
+
 
 }
+
+const getItmById= async (req,res)=>{
+
+
+    try {
+        req=matchedData(req)
+        const {id}=req
+        
+        const data= await trucksModel.findById(id)
+
+        res.send({data})
+
+    } catch (error) {
+        handleErrorHttp(res,'ERROR_GET_ITEMS_BY_ID_TRUCKS')
+    }
+
+
+}
+
 
 const createItem=async(req,res)=>{
-    const{ body}=req
-    // console.log(body)
-    const data = await trucksModel.create(body)
-    res.send(data)
+    //body limpios evitar enviar datos no necesarios utilizo la funcion 'matchedData' de express validators
+    try {
+        const body = matchedData(req)//limpio body solo deja los objetos de la data que cumple la validadciones que predeterminaste
+        // console.log(body)
+        const data = await trucksModel.create(body)
+        res.send({data})        
+    } catch (error) {
+        handleErrorHttp(res,'ERROR_CREATE_ITEM_TRUCKS')
+        
+    }
+
 
 }
 
-const upDateItem=(req,res)=>{
+const upDateItem=async(req,res)=>{
+    try{
+        const {id, ...body}= matchedData(req)// sacar el id, un obj con el id, obj con el resto de la info
+        
+        const data= await trucksModel.findOneAndUpdate(id,body)
+        res.send({data})
+
+    }catch(e){
+        handleErrorHttp(res,'ERROR_UPDATA_TRUCK')
+
+    }
 
 }
 
-const deleteItem=(req,res)=>{
+const deleteItem=async(req,res)=>{
+    try {
+
+        req=matchedData(req)
+        const {id}=req
+        
+        const data= await trucksModel.deleteOne({_id:id})
+
+        res.send({data})
+
+    } catch (error) {
+        handleErrorHttp(res,'ERROR_DELETE_ITEM')
+    }
 
 }
 
-module.exports={getItems, createItem, upDateItem, deleteItem}
+const deleteItemSoft=async(req,res)=>{
+    try {
+
+        req=matchedData(req)
+        const {id}=req
+        
+        const data= await trucksModel.delete({_id:id})
+
+        res.send({data})
+
+    } catch (error) {
+        handleErrorHttp(res,'ERROR_DELETE_SOFT_ITEM')
+    }
+
+}
+
+module.exports={getItems,getItmById, createItem, upDateItem, deleteItem, deleteItemSoft}
