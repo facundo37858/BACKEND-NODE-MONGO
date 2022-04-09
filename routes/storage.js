@@ -4,16 +4,17 @@ const router=express.Router()
 const uploadMiddleware=require('../utils/handleStorage')
 const { validatorId } = require('../validators/storage')
 
+const { protectorRoutes } = require('../middleware/session')
 
 
-router.get('/',getStorage)
+router.get('/',protectorRoutes,getStorage)
 
-router.get('/:id',validatorId,getStorageById)
+router.get('/:id',protectorRoutes,validatorId,getStorageById)
 
-router.post('/',uploadMiddleware.single('myfile'),createStorage)//se gurda la imagen en la carpeta storage
+router.post('/',protectorRoutes,uploadMiddleware.single('myfile'),createStorage)//se gurda la imagen en la carpeta storage
 
-router.put('/:id',validatorId,upDateStorage)
+router.put('/:id',protectorRoutes,validatorId,upDateStorage)
 
-router.delete('/:id',validatorId,deleteStorage)
+router.delete('/:id',protectorRoutes,validatorId,deleteStorage)
 
 module.exports=router

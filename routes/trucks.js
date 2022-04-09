@@ -2,22 +2,24 @@ const express=require('express')
 const { getItems,createItem,getItmById, upDateItem,deleteItemSoft, deleteItem} = require('../controllers/trucks')
 const {validatorCreateItem ,validatorDetails}=require('../validators/tracks')
 const { customHeader }=require('../middleware/customHeader')
+const { protectorRoutes } = require('../middleware/session')
+const checkRole = require('../middleware/role')
 const router =express.Router()
 
 
 
-router.get('/', getItems)
+router.get('/', protectorRoutes,getItems)
 
 //obtenrer el detalle de los trucks
-router.get('/:id',validatorDetails,getItmById)
+router.get('/:id',protectorRoutes, validatorDetails,getItmById)
 
 
-router.post('/', validatorCreateItem,createItem)
+router.post('/',protectorRoutes,checkRole(['admin']), validatorCreateItem,createItem)
 
-router.put('/:id',validatorDetails,validatorCreateItem,upDateItem)
+router.put('/:id',protectorRoutes, validatorDetails,validatorCreateItem,upDateItem)
 
-router.delete('/:id',validatorDetails,deleteItem)
+router.delete('/:id',protectorRoutes, validatorDetails,deleteItem)
 
-router.delete('/deleteSoft/:id',validatorDetails,deleteItemSoft)
+router.delete('/deleteSoft/:id', protectorRoutes,validatorDetails,deleteItemSoft)
 
 module.exports=router
