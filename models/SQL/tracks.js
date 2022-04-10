@@ -1,5 +1,6 @@
 const {DataTypes} = require('sequelize'); 
 const { sequelize } = require('../../config/SQL');
+const Storage=require('./storages')
 
 const Truck= sequelize.define(
     'trucks',
@@ -38,5 +39,23 @@ const Truck= sequelize.define(
     }
 
 )
+
+//asociar modelos personalizados
+
+Truck.findAllData= function(){
+    Truck.belongsTo(Storage,{
+        foreignKey:'mediaId'
+    })
+
+    return Truck.findAll({include:Storage})
+}
+
+Truck.findOneData= function(id){
+    Truck.belongsTo(Storage,{
+        foreignKey:'mediaId'
+    })
+
+    return Truck.findOne({where:{id}},{include:Storage})
+}
 module.exports=Truck
 
