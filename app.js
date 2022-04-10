@@ -8,6 +8,9 @@ const morganbody=require('morgan-body')// envia el body de las peticiones
 const loggerStream =require('./utils/handleLogers')
 
 const dbConnect=require('./config/mongo')
+const {dbConnectSQL , sequelize}=require('./config/SQL')
+
+const {ENGINE_DB}=process.env//pude ser SQL o noSQL
 
 const app= express()
 
@@ -30,5 +33,17 @@ app.use('/api',require('./routes'))
 
 const port= process.env.PORT || 3001
 
-app.listen(port,()=>console.log(`htpp://localhost:${port}`))
-dbConnect()
+app.listen(port,()=>{
+    (ENGINE_DB === 'noSQL')? dbConnect(): dbConnectSQL()
+    console.log(`htpp://localhost:${port}`)
+    
+})
+
+
+
+
+
+
+
+
+// (ENGINE_DB === 'noSQL') ? dbConnect(): dbConnectSQL()

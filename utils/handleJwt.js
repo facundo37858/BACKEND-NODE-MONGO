@@ -1,5 +1,10 @@
 const jsonWebToken= require('jsonwebtoken')
+const getProperties = require('./handlePropitiesEngine')
 const {JWT_SECRET}=process.env
+
+const propertiesKey=getProperties()// canbia el id a id o _id dependiendo del engine de la data base
+
+
 
 
 //firmar el token generar el token
@@ -8,7 +13,7 @@ const tokenSing=async(user)=>{
 
     const sign= jsonWebToken.sign(
         {
-            _id: user._id,
+            [propertiesKey.id]: user[propertiesKey.id],
             role: user.role
         },
         JWT_SECRET,//expiracin

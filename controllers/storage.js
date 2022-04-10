@@ -5,15 +5,26 @@ const PUBLIC_URL=process.env.PUBLIC_URL
 const MEDIA_PATH=`${__dirname}/../storage`//ruta absoluta donde se encuentra
 const fs=require('fs')
 
+const ENGINE_DB=process.env.ENGINE_DB
+
+const getProperties = require('../utils/handlePropitiesEngine')
+const propertiesKey=getProperties()
+
 
 const getStorage=async(req,res)=>{
     try {
+
+        if(ENGINE_DB==='SQL'){
+            const data =await storagesModel.findAll()
+            return res.send({data})
+        }
         
         const data= await storagesModel.find({})
 
         res.send({data})
 
     } catch (error) {
+        console.log(error)
         handleErrorHttp(res,'ERROR_GET_ITEMS_STORAGE')
     }
 }
@@ -22,8 +33,13 @@ const getStorageById=async(req,res)=>{
     try {
         req=matchedData(req)
         const {id}=req
+
         
-        const data= await storagesModel.findById(id)
+        const query={
+            [propertiesKey.id]:id
+        }
+        
+        const data= await storagesModel.findOne(query)
 
         res.send({data})
 

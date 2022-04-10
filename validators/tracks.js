@@ -14,7 +14,7 @@ const validatorCreateItem=[
     check('artist.nationality').exists().notEmpty(),
     check('duration.start').exists().notEmpty(),
     check('duration.end').exists().notEmpty(),
-    check('mediaId').exists().notEmpty().isMongoId(),
+    check('mediaId').exists().notEmpty(),//.isMongoId()
     (req,res,next)=>{return validateResult(req,res,next)}
 ]  
 const validatorDetails=[

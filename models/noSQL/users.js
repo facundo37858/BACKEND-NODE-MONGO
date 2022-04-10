@@ -16,11 +16,11 @@ const UserScheme= new mongoose.Schema(
         },
         password:{
             type:String,
-            select:false//para que no me devuelva el dato
+            //select:false//para que no me devuelva el dato
         },
         role:{
             type:['user','admin'],
-            default:'user'
+            default:'admin'
         }
 
     },
