@@ -20,32 +20,6 @@ const getItems= async (req,res)=>{
 
 
 }
-// const getItems = async (req, res) => {
-//     try {
-//       req = matchedData(req);
-//       const id = req.id;
-//       const [data] = await trucksModel.aggregate([
-//         {
-//           $lookup: {
-//             from: "storages",
-//             localField: "mediaId",
-//             foreignField: "_id",
-//             as: "audio",
-//           },
-//         },
-//         { $unwind: "$audio" },
-//         {
-//           $match: {
-//             _id: mongoose.Types.ObjectId(id),
-//           },
-//         },
-//       ]);
-  
-//       res.send({ data });
-//     } catch (e) {
-//         handleErrorHttp(res, e);
-//     }
-//   };
 
 const getItmById= async (req,res)=>{
 

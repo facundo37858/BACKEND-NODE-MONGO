@@ -69,17 +69,6 @@ const createStorage=async(req,res)=>{
    
 }
 
-const upDateStorage=async(req,res)=>{
-
-    try {
-        
-    } catch (error) {
-        handleErrorHttp(res,'ERROR_UPDATA_STORAGE')
-        
-    }
-
-}
-
 const deleteStorage=async(req,res)=>{
 
     try {
