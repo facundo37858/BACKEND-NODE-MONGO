@@ -16,7 +16,7 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 
 const dbConnectSQL= async()=>{
     try {
-        await sequelize.sync({force:false})
+        await sequelize.sync({force:true})
         console.log('SQL_CONNEC_OK')
         
     } catch (error) {

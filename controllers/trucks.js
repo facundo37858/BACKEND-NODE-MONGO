@@ -7,7 +7,7 @@ const getItems= async (req,res)=>{
 
     try {
         
-        const data= await trucksModel.find({})
+        const data= await trucksModel.findAllData()
         const user=req.user//propiedad agragada en en middleware 
         // console.log(user)
 
@@ -54,11 +54,13 @@ const getItmById= async (req,res)=>{
         req=matchedData(req)
         const {id}=req
         
-        const data= await trucksModel.findById(id)
+        let data= await trucksModel.findOneData(id)
+        
 
         res.send({data})
 
     } catch (error) {
+        console.log(error)
         handleErrorHttp(res,'ERROR_GET_ITEMS_BY_ID_TRUCKS')
     }
 

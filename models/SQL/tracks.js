@@ -31,7 +31,7 @@ const Truck= sequelize.define(
             type:DataTypes.INTEGER
         },
         mediaId:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         }
     },
     {
@@ -41,21 +41,18 @@ const Truck= sequelize.define(
 )
 
 //asociar modelos personalizados
-
+Truck.belongsTo(Storage,{
+    foreignKey:'mediaId'
+})
 Truck.findAllData= function(){
-    Truck.belongsTo(Storage,{
-        foreignKey:'mediaId'
-    })
+   
 
     return Truck.findAll({include:Storage})
+    
 }
 
 Truck.findOneData= function(id){
-    Truck.belongsTo(Storage,{
-        foreignKey:'mediaId'
-    })
-
-    return Truck.findOne({where:{id}},{include:Storage})
+    return Truck.findOne({where:{id}})
 }
 module.exports=Truck
 

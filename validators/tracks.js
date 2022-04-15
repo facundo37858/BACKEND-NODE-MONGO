@@ -18,7 +18,7 @@ const validatorCreateItem=[
     (req,res,next)=>{return validateResult(req,res,next)}
 ]  
 const validatorDetails=[
-    check('id').exists().notEmpty().isMongoId(),
+    check('id').exists().notEmpty(),//.isMongoId(),
     (req,res,next)=>{return validateResult(req,res,next)}
 
 ] 
