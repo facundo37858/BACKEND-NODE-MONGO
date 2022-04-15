@@ -53,6 +53,10 @@ Se tiene la opción de utilizar base de datos relacionales o no relacionales.
 
 *Para la autenticación del usuario por JWT.*
 
+- SlackWebHook
+
+*Para el aviso de errores por medio de slack*
+
 ## Funcionamiento.
 
 - Definir en el archivo .env el tipo de base de datos noSQL o SQL.
